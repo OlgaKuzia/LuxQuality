@@ -12,10 +12,10 @@ get linkedinButton(){
 async TwitterPageOpen(){
   const initialWindowHandles = await browser.getWindowHandles();
 
-    // Кликаем по ссылке на Twitter
+    
     await this.twitterButton.click()
 
-    // Ждем, пока откроется новое окно
+    //We are waiting for a new window to open
     await browser.waitUntil(
       async () => {
         const currentHandles = await browser.getWindowHandles();
@@ -27,19 +27,17 @@ async TwitterPageOpen(){
       }
     );
 
-    // Переключаемся на новое окно
+    // Switch to a new window
     const windows = await browser.getWindowHandles();
     await browser.switchToWindow(windows[1]);
 
-    // Проверяем, что открылся Twitter
+  
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toContain('https://x.com/saucelabs');
     await browser.pause(3000)
-
-    // Закрываем новое окно
     await browser.closeWindow();
 
-    // Возвращаемся в исходное окно
+    // We return to the original window
     await browser.switchToWindow(windows[0]);
   }
 
@@ -48,10 +46,9 @@ async TwitterPageOpen(){
    
    const initialWindowHandles = await browser.getWindowHandles();
 
-   // Кликаем по ссылке на Twitter
    await this.facebookButton.click()
 
-   // Ждем, пока откроется новое окно
+   // We are waiting for a new window to open
    await browser.waitUntil(
      async () => {
        const currentHandles = await browser.getWindowHandles();
@@ -63,19 +60,12 @@ async TwitterPageOpen(){
      }
    );
 
-   // Переключаемся на новое окно
    const windows = await browser.getWindowHandles();
    await browser.switchToWindow(windows[1]);
-
-   // Проверяем, что открылся Twitter
    const currentUrl = await browser.getUrl();
    expect(currentUrl).toContain('https://www.facebook.com/saucelabs');
-   await browser.pause(3000)
-
-   // Закрываем новое окно
+   await browser.pause(2000)
    await browser.closeWindow();
-
-   // Возвращаемся в исходное окно
    await browser.switchToWindow(windows[0]);
   }
  
@@ -83,11 +73,7 @@ async TwitterPageOpen(){
  async LinkedinPageOpen() {
    
    const initialWindowHandles = await browser.getWindowHandles();
-
-    // Кликаем по ссылке на лінкедін
     await this.linkedinButton.click()
-
-    // Ждем, пока откроется новое окно
     await browser.waitUntil(
       async () => {
         const currentHandles = await browser.getWindowHandles();
@@ -99,19 +85,12 @@ async TwitterPageOpen(){
       }
     );
 
-    // Переключаемся на новое окно
     const windows = await browser.getWindowHandles();
     await browser.switchToWindow(windows[1]);
-
-    // Проверяем, что открылся Twitter
     const currentUrl = await browser.getUrl();
     expect(currentUrl).toContain('https://www.linkedin.com/company/sauce-labs/');
     await browser.pause(3000)
-
-    // Закрываем новое окно
     await browser.closeWindow();
-
-    // Возвращаемся в исходное окно
     await browser.switchToWindow(windows[0]);
 
  }

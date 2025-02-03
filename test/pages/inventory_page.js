@@ -30,23 +30,22 @@ class InventoryPage{
   async BurgerButtonClick(){
     await this.burgerButton.click()
     await this.burgerMenu.waitForDisplayed({timeout: 5000})
-    expect (await this.burgerMenu.isDisplayed()).toBe(true)// перевірка, що меню відображається
+    expect (await this.burgerMenu.isDisplayed()).toBe(true)
     expect (await this.menuItem.length).toBe(4)
 
     await browser.pause(5000)
   }
 
   async Logout(){
-    await this.LogoutButton.click()
-    // Очікуємо,що URL зміниться на потрібний, після логауту
+    await this.LogoutButton.click();
+    // We expect the URL to change to the desired one after logout.
     await browser.waitUntil(
       async () => (await browser.getUrl()) === 'https://www.saucedemo.com/',
       {
-        timeout: 10000,  // Чекаємо до 10 секунд
+        timeout: 10000,  
         timeoutMsg: 'Страница инвентаря не загрузилась за 10 секунд'
       }
     )
-    // Перевірка, що URL сторінки дійсно вірний
   const currentUrl = await browser.getUrl();
   expect(currentUrl).toBe('https://www.saucedemo.com/') 
   expect(await this.userNameTextBox.getValue()).toBe('');
@@ -57,12 +56,12 @@ async AddToCartProduct(expectedValue){
   await this.cartBadge.waitForDisplayed({ timeout: 5000 }); 
   expect (await this.cartBadge.getText()).toBe(expectedValue.toString())
 }
-// Получение списка продуктов
+// Obtaining a list of products
 async InventoryItemsIsShown() {
-  const products = await $$('.cart_item');  // Получаем все элементы с классом cart_item
+  const products = await $$('.cart_item');  
   const productPrices = [];
   for (const product of products) {
-    const price = await product.$('.inventory_item_price').getText();  // Получаем текст с ценой продукта
+    const price = await product.$('.inventory_item_price').getText();  
     productPrices.push({ price: parseFloat(price.replace('$', '').trim()) });
   }
   return productPrices;

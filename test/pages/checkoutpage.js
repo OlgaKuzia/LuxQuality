@@ -43,7 +43,7 @@ class CheckoutPage {
   async CheckOutButtonClick(){
     await this.checkOutButton.click()
   }
-  // Метод для ввода данных в поля
+  // A method for entering data into fields
   async inputFirstName(firstName) {
     await this.firstNameField.setValue(firstName);
   }
@@ -56,12 +56,12 @@ class CheckoutPage {
     await this.postalCodeField.setValue(postalCode);
   }
 
-  // Метод для клика по кнопке Continue
+  // Method for clicking the Continue button
   async clickContinue() {
     await this.continueButton.click();
   }
 
-  // Получение списка продуктов
+  // Obtaining a list of products
   async getProductList() {
     const products = await $$('.cart_item');
     const productPrices = [];
@@ -72,47 +72,47 @@ class CheckoutPage {
     return productPrices;
   }
 
-  // Получить общую цену
+  // Get the total price
   async getTotalPrice() {
     const totalPrice = await $('.summary_total_label').getText();
     return parseFloat(totalPrice.replace('$', '').trim());
   }
 
-  // Клик по кнопке Finish
+  // Click the Finish button
   async clickFinish() {
     await this.finishButton.click();
   }
 
-  // Получить сообщение на странице "Checkout Complete"
+  // Receive a message on the "Checkout Complete" page
   async getCheckoutCompleteMessage() {
     await this.checkoutCompleteMessage.getText();
   }
 
-  // Получить badge корзины
+  // Get a basket badge
 async getCartBadge() {
   const cartBadge = await this.cartBadge;
   if (await cartBadge.isExisting()) {
     return await cartBadge.getText();  
   }
-  return '';  // Если элемента нет, возвращаем пустую строку
+  return '';  
 }
 
-  // Клик по кнопке Back Home
+  
   async clickBackHome() {
     await this.backHomeButton.click();
   }
 
 
-  // Получение списка продуктов
+  // Obtaining a list of products
   async InventoryItemsIsShown() {
-    const products = await this.inventoryItems;  // Получаем все товары
-    console.log('products:', products);  // Логируем результат
+    const products = await this.inventoryItems;  
+    console.log('products:', products); 
     if (!Array.isArray(products)) {
       throw new Error('products is not an array');
     }
     const productPrices = [];
     for (const product of products) {
-      const price = await product.$('.inventory_item_price').getText();  // Получаем цену продукта
+      const price = await product.$('.inventory_item_price').getText();  
       productPrices.push({ price: parseFloat(price.replace('$', '').trim()) });
     }
     return productPrices;

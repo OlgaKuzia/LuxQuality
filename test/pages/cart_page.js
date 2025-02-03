@@ -24,43 +24,44 @@ class CartPage{
   async ProductInTheCart(){
     await this.cartBadge.click()
   
-    // отримаємо усі товари із корзини
+    // get all the products from the basket
     const cartItems = await this.cartItems;
   
-    // Перевіряємо, що корзина має хоча б 1 товар
+    // Check that the cart has at least 1 product
     expect(cartItems.length).toBeGreaterThan(0); 
   
-    // Для кожного товару у корзині перевіряємо його кількість та опис
+    // For each product in the cart, we check its quantity and description
     for (let item of cartItems) {
-      // Перевіряємо кількість товару
+      // Checking the quantity of goods
       const quantityText = await item.$('div.cart_quantity').getText();
-      expect(quantityText).toBe('1');  // Очікуємо, що кількість =1 
+      expect(quantityText).toBe('1');  // We expect that the number =1
   }
   }
   
   
-  // Метод для проверки, что корзина пуста (то есть нет элементов .cart_item)
+  // Method for checking that the cart is empty (that is, there are no .cart_item elements)
   async isCartEmpty() {
-  // Ждем, что контейнер корзины отображается на странице
+  // We are waiting for the basket container to be displayed on the page
   await this.cartContentsContainer.waitForDisplayed({ timeout: 5000 });
 
-  // Проверяем, что в корзине нет элементов .cart_item
+  // We check that there are no .cart_item elements in the cart
   const cartItemsCount = await this.cartItems.length;
 
-  // Используем expect для проверки, что количество элементов равно 0
+  // We use expect to check that the number of elements is 0
+
   expect(cartItemsCount).toBe(0); // Если товаров нет, корзина пуста
 }
 
 
-// Функция для проверки появления сообщения "Корзина пуста" по всей странице корзины
+// A function to check the appearance of the message "Cart empty" on the entire cart page
 async checkEmptyCartErrorMessage() {
 
-  // Ждем, что элемент с ошибкой будет отображен
+  // We are waiting for the element with an error to be displayed
   await this.errorMessage.waitForDisplayed({ timeout: 5000 });
 
-  // Проверяем, что найденный элемент действительно содержит ожидаемый текст
+  // We check that the found element really contains the expected text
   const errorText = await errorMessage.getText();
-  expect(errorText).toContain('Cart is empty'); // Убедитесь, что текст содержит "Корзина пуста"
+  expect(errorText).toContain('Cart is empty'); // Make sure the text contains "Cart is empty"
 }
 
 

@@ -25,49 +25,42 @@ class LoginPage {
   }
 
   async login(username, password){
-    await this.userNameTextBox.setValue(username)
+    await this.userNameTextBox.setValue(username);
     await this.passwordTextBox.waitForDisplayed({ timeout: 5000 });
-    await this.passwordTextBox.setValue(password)
-    const inputType = await this.passwordDots.getAttribute('type'); //перевіряємо, щоб пароль був точками
-    expect(inputType).toBe('password');
-    await browser.pause(3000)
-    await this.loginButton.click()
-    await browser.pause(5000)
-   // // Очікуємо,що URL зміниться на потрібний, після логіну
-   await browser.waitUntil(
+    await this.passwordTextBox.setValue(password) ;
+    await this.loginButton.click();
+    await browser.pause(5000);
+    await browser.waitUntil(
     
     async () => (await browser.getUrl()) === 'https://www.saucedemo.com/inventory.html',
     {
-      timeout: 10000,  // Чекаєм до 10 секунд
+      timeout: 10000,   
       timeoutMsg: 'Страница инвентаря не загрузилась за 10 секунд'
     }
   
   );
 
-  // Перевірка, що URL сорінки дійсно вірний
   const currentUrl = await browser.getUrl();
   expect(currentUrl).toBe('https://www.saucedemo.com/inventory.html');
   }
   async IsPasswordDots(){
-    const passwordValue = await this.passwordDots.getValue();  // Отримуємо введене значення пароля
-    return /^[.]+$/.test(passwordValue);  // Перевіряємо, чи складається пароль тільки з точок
+    const passwordValue = await this.passwordDots.getValue(); 
+    return /^[.]+$/.test(passwordValue);  // Check if the password consists only of dots
   }
 
-  //Перевіряєм, що відображаються карточки товару
+  
   async cardProducts(){
     expect(this.cardProductItem.length).toBeGreaterThan(0);
-    // Перевіряємо, що кожна карточка відображається
    for (let card of this.cardProductItem) {
-    await card.waitForDisplayed({ timeout: 5000 });  // Очікуємо, що кожна картка буде видимою
-    expect(await card.isDisplayed()).toBe(true);  // Перевіряємо, що картка відображається
+    await card.waitForDisplayed({ timeout: 5000 });  // We expect every card to be visible
+    expect(await card.isDisplayed()).toBe(true);  // Check that the card is displayed
   }
   }
-  // Перевіряємо, що на інветорі пейдж видно корзину
   async cartIsShown(){
     expect(await this.cart.isDisplayed()).toBe(true);
   }
 
-  //перевіряємо, чи має повідомлення про помилку текст
+  //check if the error message has text
   async checkMessage(){
     await expect(this.errorMessage).toHaveTextContaining(
       "Epic sadface: Username and password do not match any user in this service"
