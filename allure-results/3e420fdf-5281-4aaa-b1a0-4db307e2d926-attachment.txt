@@ -1,0 +1,4 @@
+{
+  "using": "xpath",
+  "value": ".//*[@class and normalize-space(text()) = \"\"bm-item-list\"\"] | .//*[@class and not(.//*[@class and normalize-space(text()) = \"\"bm-item-list\"\"]) and normalize-space() = \"\"bm-item-list\"\"]"
+}

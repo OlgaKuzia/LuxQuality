@@ -1,0 +1,4 @@
+{
+  "using": "css selector",
+  "value": "body:has(.cart_contents_container) * = \"Корзина пуста\""
+}
